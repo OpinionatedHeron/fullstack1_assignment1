@@ -20,6 +20,6 @@ export const webRoutes = [
   { method: "POST", path: "/folder/{id}/addlocation", config: folderController.addLocation },
 
   { method: "GET", path: "/dashboard/deletefolder/{id}", config: dashboardController.deleteFolder },
-  { method: "GET", path: "/folder/{id}/deletelocation/{trackid}", config: playlistController.deleteLocation },
+  { method: "GET", path: "/folder/{id}/deletelocation/{locationid}", config: folderController.deleteLocation },
 
 ];
