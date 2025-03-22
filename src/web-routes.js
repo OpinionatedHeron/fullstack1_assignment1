@@ -1,6 +1,7 @@
 import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { aboutController } from "./controllers/about-controller.js";
+import { folderController } from "./controllers/folder-controller.js";
 
 export const webRoutes = [
   { method: "GET", path: "/", config: accountsController.index },
@@ -14,4 +15,11 @@ export const webRoutes = [
   { method: "POST", path: "/dashboard/addfolder", config: dashboardController.addFolder },
 
   { method: "GET", path: "/about", config: aboutController.index },
+
+  { method: "GET", path: "/folder/{id}", config: folderController.index },
+  { method: "POST", path: "/folder/{id}/addlocation", config: folderController.addLocation },
+
+  { method: "GET", path: "/dashboard/deletefolder/{id}", config: dashboardController.deleteFolder },
+  { method: "GET", path: "/folder/{id}/deletelocation/{trackid}", config: playlistController.deleteLocation },
+
 ];
