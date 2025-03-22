@@ -1,4 +1,6 @@
+import { validate } from "uuid";
 import { db } from "../models/db.js";
+import { LocationSpec } from "../models/joi-schemas.js";
 
 export const folderController = {
   index: {
@@ -13,6 +15,13 @@ export const folderController = {
   },
 
   addLocation: {
+    validate: {
+      payload: LocationSpec,
+      options: { abortEarly: false },
+      failAction: function (request, h, error) {
+        return h.view("folder-view", { title: "Add location error", errors: error.details }).takeover().code(400);
+      },
+    },
     handler: async function (request, h) {
       const folder = await db.folderStore.getFolderById(request.params.id);
       const newLocation = {
