@@ -1,0 +1,33 @@
+{
+  "name": "placemark",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "lint": "./node_modules/.bin/eslint . --ext .js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpinionatedHeron/fullstack1_assignment1.git"
+  },
+  "author": "opinionatedheron",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OpinionatedHeron/fullstack1_assignment1/issues"
+  },
+  "homepage": "https://github.com/OpinionatedHeron/fullstack1_assignment1#readme",
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-import": "^2.31.0",
+    "prettier": "^3.5.3"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^21.4.0",
+    "@hapi/vision": "^7.0.3",
+    "handlebars": "^4.7.8"
+  }
+}
