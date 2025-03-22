@@ -1,0 +1,24 @@
+<table class="table is-fullwidth">
+  <thead>
+    <tr>
+      <th>Location</th>
+      <th>Category</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each folder.locations}}
+      <tr>
+        <td>
+          {{location}}
+        </td>
+        <td>
+          {{category}}
+        </td>
+        <td>
+          {{description}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
