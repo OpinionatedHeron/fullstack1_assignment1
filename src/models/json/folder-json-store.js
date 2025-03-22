@@ -18,8 +18,12 @@ export const folderJsonStore = {
 
     async getFolderById(id) {
         await db.read();
-        const list = db.data.folders.find((folder) => folder._id === id);
-        list.locations = await locationJsonStore.getLocationsByFolderId(list._id);
+        let list = db.data.folders.find((folder) => folder._id === id);
+        if (list) {
+            list.locations = await locationJsonStore.getLocationsByFolderId(list._id);
+        } else {
+            list = null;
+        }
         return list;
     },
 
@@ -31,7 +35,7 @@ export const folderJsonStore = {
     async deleteFolderById(id) {
         await db.read();
         const index = db.data.folders.findIndex((folder) => folder._id === id);
-        db.data.folders.splice(index, 1);
+        if (index !== -1) db.data.folders.splice(index, 1);
         await db.write();
     },
 

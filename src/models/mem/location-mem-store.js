@@ -19,16 +19,24 @@ export const locationMemStore = {
   },
 
   async getLocationById(id) {
-    return locations.find((location) => location._id === id);
+    let foundLocation = locations.find((location) => location._id === id);
+    if (!foundLocation) {
+      foundLocation = null;
+    }
+    return foundLocation;
   },
 
   async getFolderLocations(folderId) {
-    return locations.filter((location) => location.folderid === folderId);
+    let foundLocations = locations.filter((location) => location.folderid === folderId);
+    if (!foundLocations) {
+      foundLocations = null;
+    }
+    return foundLocations;
   },
 
   async deleteLocation(id) {
     const index = locations.findIndex((location) => location._id === id);
-    locations.splice(index, 1);
+    if (index !== -1) locations.splice(index, 1);
   },
 
   async deleteAllLocations() {
