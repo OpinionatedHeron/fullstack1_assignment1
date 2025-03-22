@@ -1,4 +1,3 @@
-import { options } from "joi";
 import { db } from "../models/db.js";
 import { FolderSpec } from "../models/joi-schemas.js";
 
