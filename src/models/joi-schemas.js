@@ -1,5 +1,7 @@
 import Joi from "joi";
 
+export const IdSpec = Joi.alternatives().try(Joi.string(), Joi.object()).description("a valid ID");
+
 export const UserSpec = Joi.object()
   .keys({
     firstName: Joi.string().example("Riz").required(),
@@ -7,6 +9,8 @@ export const UserSpec = Joi.object()
     email: Joi.string().email().example("riz@email.com").required(),
     username: Joi.string().example("Shadow").required(),
     password: Joi.string().example("theball").required(),
+    _id: IdSpec,
+    __v: Joi.number()
   })
   .label("UserDetails");
 
