@@ -1,5 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
+import { IdSpec,LocationSpec, LocationSpecPlus, LocationArraySpec } from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const locationApi = {
   find: {
@@ -12,6 +14,10 @@ export const locationApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    response: { schema: LocationArraySpec, failAction: validationError },
+    description: "Get all locationApi",
+    notes: "Returns all locationApi",
   },
 
   findOne: {
@@ -27,6 +33,11 @@ export const locationApi = {
         return Boom.serverUnavailable("No location with this id");
       }
     },
+    tags: ["api"],
+    description: "Find a Location",
+    notes: "Returns a location",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: LocationSpecPlus, failAction: validationError },
   },
 
   create: {
@@ -45,6 +56,11 @@ export const locationApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Create a location",
+    notes: "Returns the newly created location",
+    validate: { payload: LocationSpec },
+    response: { schema: LocationSpecPlus, failAction: validationError },
   },
 
   deleteAll: {
@@ -57,6 +73,8 @@ export const locationApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete all locationApi",
   },
 
   deleteOne: {
@@ -73,5 +91,8 @@ export const locationApi = {
         return Boom.serverUnavailable("No Location with this id");
       }
     },
+    tags: ["api"],
+    description: "Delete a location",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 };
