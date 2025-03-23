@@ -22,4 +22,5 @@ export const webRoutes = [
   { method: "GET", path: "/dashboard/deletefolder/{id}", config: dashboardController.deleteFolder },
   { method: "GET", path: "/folder/{id}/deletelocation/{locationid}", config: folderController.deleteLocation },
 
+  { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } }
 ];
