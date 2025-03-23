@@ -4,10 +4,10 @@ import { locationMemStore } from "./mem/location-mem-store.js";
 import { userJsonStore } from "./json/user-json-store.js";
 import { folderJsonStore } from "./json/folder-json-store.js";
 import { locationJsonStore } from "./json/location-json-store.js";
-import { connectMongo } from "./mongo/connect.js";
 import { userMongoStore } from "./mongo/user-mongo-store.js";
 import { folderMongoStore } from "./mongo/folder-mongo-store.js";
 import { locationMongoStore } from "./mongo/location-mongo-store.js";
+import{ connectMongo } from "./mongo/connect.js";
 
 export const db = {
   userStore: null,

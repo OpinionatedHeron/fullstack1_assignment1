@@ -29,7 +29,7 @@ export const locationMongoStore = {
 
     async deleteLocation(id) {
         try {
-            await Location.deleteOnce({ _id: id });
+            await Location.deleteOne({ _id: id });
         } catch (error) {
             console.log("bad id");
         }
