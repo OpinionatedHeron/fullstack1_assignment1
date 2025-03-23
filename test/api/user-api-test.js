@@ -49,7 +49,7 @@ suite("User API tests", () => {
       assert.fail("Should not return a response");
     } catch (error) {
       assert(error.response.data.message === "No User with this id");
-      // assert.equal(error.response.data.statusCode, 503); - commented out, kept getting a 404
+      // assert.equal(error.response.data.statusCode, 503);
     }
   });
 
