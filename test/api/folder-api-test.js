@@ -10,9 +10,13 @@ suite("Folder API tests", () => {
   let user = null;
 
   setup(async () => {
+    placemarkService.clearAuth();
+    user = await placemarkService.createUser(grog);
+    await placemarkService.authenticate(grog);
     await placemarkService.deleteAllFolders();
     await placemarkService.deleteAllUsers();
     user = await placemarkService.createUser(grog);
+    await placemarkService.authenticate(grog);
     dublin.userid = user._id;
   });
 

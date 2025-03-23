@@ -1,11 +1,18 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { IdSpec,LocationSpec, LocationSpecPlus, LocationArraySpec } from "../models/joi-schemas.js";
+import {
+  IdSpec,
+  LocationSpec,
+  LocationSpecPlus,
+  LocationArraySpec,
+} from "../models/joi-schemas.js";
 import { validationError } from "./logger.js";
 
 export const locationApi = {
   find: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const locations = await db.locationStore.getAllLocations();
@@ -21,10 +28,14 @@ export const locationApi = {
   },
 
   findOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     async handler(request) {
       try {
-        const location = await db.locationStore.getLocationById(request.params.id);
+        const location = await db.locationStore.getLocationById(
+          request.params.id
+        );
         if (!location) {
           return Boom.notFound("No location with this id");
         }
@@ -41,7 +52,9 @@ export const locationApi = {
   },
 
   create: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const location = await db.locationStore.addLocation(
@@ -64,7 +77,9 @@ export const locationApi = {
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         await db.locationStore.deleteAllLocations();
@@ -78,10 +93,14 @@ export const locationApi = {
   },
 
   deleteOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
-        const location = await db.locationStore.getLocationById(request.params.id);
+        const location = await db.locationStore.getLocationById(
+          request.params.id
+        );
         if (!location) {
           return Boom.notFound("No Location with this id");
         }

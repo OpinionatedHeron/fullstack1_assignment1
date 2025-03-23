@@ -8,10 +8,14 @@ suite("Location API tests", () => {
   let kilkennyFaves = null;
 
   setup(async () => {
-    await placemarkService.deleteAllFolders();
-    await placemarkService.deleteAllUsers();
-    await placemarkService.deleteAllLocations();
+    placemarkService.clearAuth();
     user = await placemarkService.createUser(grog);
+    await placemarkService.authenticate(grog);
+    await placemarkService.deleteAllFolders();
+    await placemarkService.deleteAllLocations();
+    await placemarkService.deleteAllUsers();
+    user = await placemarkService.createUser(grog);
+    await placemarkService.authenticate(grog);
     dublin.userid = user._id;
     kilkennyFaves = await placemarkService.createFolder(dublin);
   });

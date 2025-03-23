@@ -5,7 +5,9 @@ import { validationError } from "./logger.js";
 
 export const folderApi = {
   find: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const folders = await db.folderStore.getAllFolders();
@@ -21,7 +23,9 @@ export const folderApi = {
   },
 
   findOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     async handler(request) {
       try {
         const folder = await db.folderStore.getFolderById(request.params.id);
@@ -41,7 +45,9 @@ export const folderApi = {
   },
 
   create: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const folder = request.payload;
@@ -62,7 +68,9 @@ export const folderApi = {
   },
 
   deleteOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const folder = await db.folderStore.getFolderById(request.params.id);
@@ -81,7 +89,9 @@ export const folderApi = {
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         await db.folderStore.deleteAllFolders();

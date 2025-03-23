@@ -1,19 +1,19 @@
-import Hapi from "@hapi/hapi";
-import Vision from "@hapi/vision";
-import Cookie from "@hapi/cookie";
 import Inert from "@hapi/inert";
-import Handlebars from "handlebars";
-import path from "path";
+import Vision from "@hapi/vision";
+import Hapi from "@hapi/hapi";
+import Cookie from "@hapi/cookie";
 import dotenv from "dotenv";
+import path from "path";
 import Joi from "joi";
 import jwt from "hapi-auth-jwt2";
 import HapiSwagger from "hapi-swagger";
 import { fileURLToPath } from "url";
+import Handlebars from "handlebars";
 import { webRoutes } from "./web-routes.js";
 import { db } from "./models/db.js";
 import { accountsController } from "./controllers/accounts-controller.js";
-import { apiRoutes } from "./api-routes.js";
 import { validate } from "./api/jwt-utils.js";
+import { apiRoutes } from "./api-routes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,15 +26,14 @@ if (result.error) {
 
 const swaggerOptions = {
   info: {
-    title: "Placemark API",
+    title: "Playtime API",
     version: "0.1",
   },
 };
 
 async function init() {
   const server = Hapi.server({
-    port: 3000,
-    host: "localhost",
+    port: process.env.PORT || 3000,
   });
 
   await server.register(Cookie);
@@ -65,8 +64,8 @@ async function init() {
 
   server.auth.strategy("session", "cookie", {
     cookie: {
-      name: process.env.COOKIE_NAME,
-      password: process.env.COOKIE_PASSWORD,
+      name: process.env.cookie_name,
+      password: process.env.cookie_password,
       isSecure: false,
     },
     redirectTo: "/",
@@ -75,7 +74,7 @@ async function init() {
   server.auth.strategy("jwt", "jwt", {
     key: process.env.cookie_password,
     validate: validate,
-    verifyOptions: { algorithms: ["HS256"] }
+    verifyOptions: { algorithms: ["HS256"] },
   });
   server.auth.default("session");
 
