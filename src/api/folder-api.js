@@ -1,5 +1,4 @@
 import Boom from "@hapi/boom";
-import { FolderSpec } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
 
 export const folderApi = {
