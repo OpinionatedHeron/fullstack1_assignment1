@@ -1,4 +1,4 @@
-import { title } from "process";
+export const serviceUrl = "http://localhost:3000";
 
 export const grog = {
     firstName: "Grog",
