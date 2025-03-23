@@ -43,4 +43,11 @@ export const folderMongoStore = {
   async deleteAllFolders() {
     await Folder.deleteMany({});
   },
+
+  async updateFolder(updatedFolder) {
+    const folder = await Folder.findOne({ _id: updatedFolder._id });
+    folder.title = updatedFolder.title;
+    folder.img = updatedFolder.img;
+    await folder.save();
+  },
 };

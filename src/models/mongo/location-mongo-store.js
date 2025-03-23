@@ -40,7 +40,6 @@ export const locationMongoStore = {
   },
 
   async updateLocation(location, updatedLocation) {
-    const locationDoc = await Location.findOne({ _id: location._id });
     locationDoc.title = updatedLocation.title;
     locationDoc.category = updatedLocation.category;
     locationDoc.description = updatedLocation.description;

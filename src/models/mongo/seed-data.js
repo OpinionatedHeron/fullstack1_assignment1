@@ -1,3 +1,5 @@
+import { title } from "process";
+
 export const seedData = {
   users: {
     _model: "User",
@@ -21,6 +23,22 @@ export const seedData = {
       email: "kris@email.com",
       username: "k2lives",
       password: "heygirlie",
-    },
+    }
   },
+  folders: {
+    _model: "Folder",
+    dublin: {
+      title: "Dublin Faves",
+      userid: "->users.kristen"
+    }
+  },
+  locations: {
+    _model : "Location",
+    dublin_castle : {
+      title: "Dublin Castle",
+      category: "Castle",
+      description: "A former motte-and-bailey castle",
+      folderid: "->folders.dublin"
+    },
+  }
 };

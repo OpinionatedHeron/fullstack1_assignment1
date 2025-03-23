@@ -2,6 +2,7 @@ import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { aboutController } from "./controllers/about-controller.js";
 import { folderController } from "./controllers/folder-controller.js";
+import { locationController } from "./controllers/location-controller.js";
 
 export const webRoutes = [
   { method: "GET", path: "/", config: accountsController.index },
@@ -22,5 +23,11 @@ export const webRoutes = [
   { method: "GET", path: "/dashboard/deletefolder/{id}", config: dashboardController.deleteFolder },
   { method: "GET", path: "/folder/{id}/deletelocation/{locationid}", config: folderController.deleteLocation },
 
+  { method: "GET", path: "/location/{id}/editlocation/{locationid}", config: locationController.index },
+  { method: "POST", path: "/location/{id}/updatelocation/{locationid}", config: locationController.update },
+
+  { method: "POST", path: "/folder/{id}/uploadimage", config: folderController.uploadImage },
+
   { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } }
+
 ];
