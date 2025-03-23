@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "firstName": "Riz",
+      "lastName": "Gukgak",
+      "email": "riz@email.com",
+      "password": "theball",
+      "_id": "ba304be6-28d0-49b0-be38-1ef005a2eb35"
+    },
+    {
+      "firstName": "Fabian",
+      "lastName": "Seacaster",
+      "email": "fabian@email.com",
+      "password": "pappa",
+      "_id": "2ef342af-e444-409d-a0ee-bbe30b10289d"
+    },
+    {
+      "firstName": "Kristen",
+      "lastName": "Applebees",
+      "email": "kris@email.com",
+      "password": "heygirlie",
+      "_id": "de784999-14f1-47ce-a234-178bbd19daa4"
+    }
+  ],
+  "folders": [
+    {
+      "title": "Kilkenny Faves",
+      "_id": "7fad91e5-4ece-4984-a41c-494d3965b614"
+    },
+    {
+      "title": "Tipperary Faves",
+      "_id": "5ccb96a8-968a-4eb3-b098-ee02ddd4a3be"
+    },
+    {
+      "title": "Donegal Faves",
+      "_id": "7f91b1c5-e952-4e42-ab96-ec51faaf2dee"
+    }
+  ],
+  "locations": []
+}
