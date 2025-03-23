@@ -54,3 +54,11 @@ export const FolderSpecPlus = FolderSpec.keys({
 }).label("FolderPlus");
 
 export const FolderArraySpec = Joi.array().items(FolderSpecPlus).label("FolderArray");
+
+export const JwtAuth = Joi.object()
+  .keys({
+    success: Joi.boolean().example("true").required(),
+    token: Joi.string().example("eyJhbGciOiJND.g5YmJisIjoiaGYwNTNjAOhE.gCWGmY5-YigQw0DCBo").required(),
+  })
+  .label("JwtAuth");
+

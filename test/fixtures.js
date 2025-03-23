@@ -8,6 +8,11 @@ export const grog = {
   password: "ale",
 };
 
+export const grogCredentials = {
+    email: "grog@email.com",
+    password: "ale"
+};
+
 export const testUsers = [
   {
     firstName: "Riz",

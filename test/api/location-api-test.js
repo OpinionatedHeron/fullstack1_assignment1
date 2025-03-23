@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { assertSubset } from "../test-utils.js";
 import { placemarkService } from "./placemark-service.js";
-import { grog, dublin, testFolders, testLocations, dublinCastle } from "../fixtures.js";
+import { grog, dublin, testFolders, testLocations, dublinCastle, grogCredentials } from "../fixtures.js";
 
 suite("Location API tests", () => {
   let user = null;
@@ -10,12 +10,12 @@ suite("Location API tests", () => {
   setup(async () => {
     placemarkService.clearAuth();
     user = await placemarkService.createUser(grog);
-    await placemarkService.authenticate(grog);
+    await placemarkService.authenticate(grogCredentials);
     await placemarkService.deleteAllFolders();
     await placemarkService.deleteAllLocations();
     await placemarkService.deleteAllUsers();
     user = await placemarkService.createUser(grog);
-    await placemarkService.authenticate(grog);
+    await placemarkService.authenticate(grogCredentials);
     dublin.userid = user._id;
     kilkennyFaves = await placemarkService.createFolder(dublin);
   });

@@ -2,7 +2,7 @@ import { EventEmitter } from "events";
 import { assert } from "chai";
 import { placemarkService } from "./placemark-service.js";
 import { assertSubset } from "../test-utils.js";
-import { grog, dublin, testFolders } from "../fixtures.js";
+import { grog, dublin, testFolders, grogCredentials } from "../fixtures.js";
 
 EventEmitter.setMaxListeners(25);
 
@@ -12,11 +12,11 @@ suite("Folder API tests", () => {
   setup(async () => {
     placemarkService.clearAuth();
     user = await placemarkService.createUser(grog);
-    await placemarkService.authenticate(grog);
+    await placemarkService.authenticate(grogCredentials);
     await placemarkService.deleteAllFolders();
     await placemarkService.deleteAllUsers();
     user = await placemarkService.createUser(grog);
-    await placemarkService.authenticate(grog);
+    await placemarkService.authenticate(grogCredentials);
     dublin.userid = user._id;
   });
 
