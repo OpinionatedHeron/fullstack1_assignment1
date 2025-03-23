@@ -1,11 +1,15 @@
+import { EventEmitter } from "events";
 import { assert } from "chai";
 import { db } from "../src/models/db.js";
 import { testFolders, dublin } from "./fixtures.js";
+import { assertSubset } from "./test-utils.js";
+
+EventEmitter.setMaxListeners(25);
 
 suite("Folder Model tests", () => {
 
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
     await db.folderStore.deleteAllFolders();
     for (let i = 0; i < testFolders.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
@@ -15,7 +19,7 @@ suite("Folder Model tests", () => {
 
   test("create a folder", async () => {
     const folder = await db.folderStore.addFolder(dublin);
-    assert.equal(dublin, folder);
+    assertSubset(dublin, folder);
     assert.isDefined(folder._id);
   });
 
@@ -30,7 +34,7 @@ suite("Folder Model tests", () => {
   test("get a folder - success", async () => {
     const folder = await db.folderStore.addFolder(dublin);
     const returnedFolder = await db.folderStore.getFolderById(folder._id);
-    assert.equal(dublin, folder);
+    assertSubset(dublin, folder);
   });
 
   test("delete One Playist - success", async () => {
