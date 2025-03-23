@@ -18,18 +18,35 @@ export const locationJsonStore = {
 
   async getLocationsByFolderId(id) {
     await db.read();
-    return db.data.locations.filter((location) => location.folderid === id);
+    let foundLocations = db.data.locations.filter((location) => location.folderid === id);
+    if (!foundLocations) {
+      foundLocations = null;
+    }
+    return foundLocations;
   },
 
   async getLocationById(id) {
     await db.read();
-    return db.data.locations.find((location) => location._id === id);
+    let foundLocation = db.data.locations.find((location) => location._id === id);
+    if (!foundLocation) {
+      foundLocation = null;
+    }
+    return foundLocation;
+  },
+
+  async getFolderLocations(folderId) {
+    await db.read();
+    let foundLocations = locations.filter((location) => location.folderId === folderId);
+    if (!foundLocations) {
+      foundLocations = null;
+    }
+    return foundLocations;
   },
 
   async deleteLocation(id) {
     await db.read();
     const index = db.data.locations.findIndex((location) => location._id === id);
-    db.data.locations.splice(index, 1);
+    if (index !== -1) db.data.locations.splice(index, 1);
     await db.write();
   },
 
@@ -40,8 +57,8 @@ export const locationJsonStore = {
 
   async updateLocation(location, updatedLocation) {
     location.title = updatedLocation.title;
-    location.artist = updatedLocation.artist;
-    location.duration = updatedLocation.duration;
+    location.category = updatedLocation.category;
+    location.description = updatedLocation.description;
     await db.write();
   },
 };
