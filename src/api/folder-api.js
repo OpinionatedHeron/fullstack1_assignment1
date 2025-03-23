@@ -1,5 +1,7 @@
 import Boom from "@hapi/boom";
+import { IdSpec, FolderArraySpec, FolderSpec, FolderSpecPlus } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
+import { validationError } from "./logger.js";
 
 export const folderApi = {
   find: {
@@ -12,6 +14,10 @@ export const folderApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    response: { schema: FolderArraySpec, failAction: validationError },
+    description: "Get all folders",
+    notes: "Returns all folders",
   },
 
   findOne: {
@@ -27,6 +33,11 @@ export const folderApi = {
         return Boom.serverUnavailable("No Folder with this id");
       }
     },
+    tags: ["api"],
+    description: "Find a Folder",
+    notes: "Returns a folder",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: FolderSpecPlus, failAction: validationError },
   },
 
   create: {
@@ -43,6 +54,11 @@ export const folderApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Create a Folder",
+    notes: "Returns the newly created folder",
+    validate: { payload: FolderSpec, failAction: validationError },
+    response: { schema: FolderSpecPlus, failAction: validationError },
   },
 
   deleteOne: {
@@ -59,6 +75,9 @@ export const folderApi = {
         return Boom.serverUnavailable("No Folder with this id");
       }
     },
+    tags: ["api"],
+    description: "Delete a folder",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
   deleteAll: {
@@ -71,5 +90,7 @@ export const folderApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete all FolderApi",
   },
 };
