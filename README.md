@@ -21,3 +21,12 @@ $ npm test
 3. Points of interest can be stored with a name, description, and category.
 4. All locations can be edited or removed as needed.
 5. User can upload image to folder as a memory of the location.
+
+## Author
+This project was created by Leanne Ahern.
+
+## Icons
+All icons are used from https://fontawesome.com/
+
+## Deployed Website
+To view the deployed website, please check out - https://fullstack1-assignment1-placemark.onrender.com
