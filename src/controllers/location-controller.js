@@ -27,7 +27,7 @@ export const locationController = {
       const location = await db.locationStore.getLocationById(request.params.locationid);
       const newLocation = {
         title: request.payload.title,
-        category: request.payload.artist,
+        category: request.payload.category,
         description: request.request.payload.duration,
       };
       await db.locationStore.updateLocation(location, newLocation);
