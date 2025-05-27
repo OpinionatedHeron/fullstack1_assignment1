@@ -7,6 +7,7 @@ import {
   LocationArraySpec,
 } from "../models/joi-schemas.js";
 import { validationError } from "./logger.js";
+import { fail } from "assert";
 
 export const locationApi = {
   find: {
@@ -72,7 +73,10 @@ export const locationApi = {
     tags: ["api"],
     description: "Create a location",
     notes: "Returns the newly created location",
-    validate: { payload: LocationSpec },
+    validate: { payload: LocationSpec,
+      params: { id: IdSpec },
+      failAction: validationError
+     },
     response: { schema: LocationSpecPlus, failAction: validationError },
   },
 

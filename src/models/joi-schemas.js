@@ -31,12 +31,12 @@ export const LocationSpec = Joi.object()
     description: Joi.string().allow("").optional().example("A Gaelic games stadium."),
     latitude: Joi.number().optional().example(53.362),
     longitude: Joi.number().optional().example(-6.249),
-    // folderid: IdSpec,
   })
   .label("Location");
 
 export const LocationSpecPlus = LocationSpec.keys({
   _id: IdSpec,
+  folderid: IdSpec,
   __v: Joi.number(),
 }).label("LocationPlus");
 

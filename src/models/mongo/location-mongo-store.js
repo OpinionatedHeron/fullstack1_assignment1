@@ -11,6 +11,10 @@ export const locationMongoStore = {
     location.folderid = folderId;
     const newLocation = new Location(location);
     const locationObj = await newLocation.save();
+    const locationData = {
+      ...location,
+      folderid: folderId
+    };
     return this.getLocationById(locationObj._id);
   },
 
