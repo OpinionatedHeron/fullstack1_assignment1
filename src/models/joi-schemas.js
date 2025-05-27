@@ -27,9 +27,11 @@ export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
 export const LocationSpec = Joi.object()
   .keys({
     title: Joi.string().required().example("Croke Park"),
-    category: Joi.string().required().example("Venue"),
+    category: Joi.string().required().example("Restaurant"),
     description: Joi.string().allow("").optional().example("A Gaelic games stadium."),
-    folderid: IdSpec,
+    latitude: Joi.number().optional().example(53.362),
+    longitude: Joi.number().optional().example(-6.249),
+    // folderid: IdSpec,
   })
   .label("Location");
 
