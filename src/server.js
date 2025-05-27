@@ -42,6 +42,12 @@ const swaggerOptions = {
 async function init() {
   const server = Hapi.server({
     port: process.env.PORT || 3000,
+    routes: {
+      cors: {
+        origin: ['http://localhost:5173/'],
+        credentials: true,
+      },
+    },
   });
 
   await server.register(Cookie);

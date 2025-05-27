@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/OpinionatedHeron/fullstack1_assignment1#readme",
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.9",
     "axios": "^1.8.4",
     "chai": "^5.2.0",
     "eslint": "^8.57.1",
