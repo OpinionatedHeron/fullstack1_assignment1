@@ -46,17 +46,46 @@ export const folderController = {
   uploadImage: {
     handler: async function (request, h) {
       try {
+        console.log("Uploade image request received for folder:", request.params.id);
+
         const folder = await db.folderStore.getFolderById(request.params.id);
-        const file = request.payload.imagefile;
-        if (Object.keys(file).length > 0) {
-          const url = await imageStore.uploadImage(request.payload.imagefile);
-          folder.img = url;
-          await db.folderStore.updateFolder(folder);
+        if (!folder) {
+          console.log("Folder not found:", request.params.id);
+          return h.response({ error: "Folder not found"}).code(404);
         }
-        return h.redirect(`/folder/${folder._id}`);
+
+        const file = request.payload.imagefile;
+        console.log.apply("File received:", file ? "Yes" : "No");
+
+        if (!file || Object.keys(file).length === 0) {
+          console.log("No file in request");
+          return h.response({ error: "No filde provided"}).code(400);
+        }
+
+        console.log("Uploading to Cloudinary...");
+        const url = await imageStore.uploadImage(file);
+
+        if (!url) {
+          console.log("Cloudinary upload failed");
+          return h.response({ error: "Upload failed" }).code(500);
+        }
+
+        console.log("Image uploaded successfully:", url);
+        folder.img = url;
+        await db.folderStore.updateFolder(folder);
+
+        return h.response({
+          success: true,
+          url: url,
+          message: "Image uploaded successfully"
+        }).code(200);
+
       } catch (err) {
-        console.log(err);
-        return h.redirect(`/folder/${folder._id}`);
+        console.error("Upload error:", err);
+        return h.response({
+          error: "Upload failed",
+          message: err.message
+        }).code(500);
       }
     },
     payload: {
