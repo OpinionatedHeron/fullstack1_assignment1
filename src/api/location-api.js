@@ -17,6 +17,28 @@ export const locationApi = {
     handler: async function (request, h) {
       try {
         const locations = await db.locationStore.getAllLocations();
+
+        const populatedLocations = await Promise.all(
+          locations.map(async (location) => {
+            const folder = await db.folderStore.getFolderById(
+              location.folderid
+            );
+            const user = folder ? await db.userStore.getUserById(folder.userid) : null;
+            return {
+              ...location,
+              folder: folder ? {
+                _id: folder._id,
+                title: folder.title,
+                name: folder.title,
+              } : null,
+              user: user ? {
+                _id: user._id,
+                name: `${user.firstName} ${user.lastName}`,
+                email: user.email,
+              } : null,
+            };
+          })
+        );
         return locations;
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
@@ -40,7 +62,25 @@ export const locationApi = {
         if (!location) {
           return Boom.notFound("No location with this id");
         }
-        return location;
+
+        const folder = await db.folderStore.getFolderById(location.folderid);
+        const user = folder ? await db.userStore.getUserById(folder.userid) : null;
+
+        const populatedLocation = {
+          ...location,
+          folder: folder ? {
+            _id: folder._id,
+            title: folder.title,
+            name: folder.title,
+          } : null,
+          user: user ? {
+            _id: user._id,
+            name: `${user.firstName} ${user.lastName}`,
+            email: user.email,
+          } : null,
+        };
+
+        return populatedLocationl;
       } catch (err) {
         return Boom.serverUnavailable("No location with this id");
       }
