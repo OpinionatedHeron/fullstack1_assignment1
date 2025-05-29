@@ -42,7 +42,7 @@ export const accountsController = {
         userData.password = await bcrypt.hash(userData.password, saltRounds);
 
         await db.userStore.addUser(userData);
-        retrun h.redirect("/");
+        return h.redirect("/");
       } catch (error) {
         return h.view("signup-view", {
           title:"Sign up error",
@@ -92,7 +92,7 @@ export const accountsController = {
       return h.redirect("/dashboard");
       } catch (error) {
         return h.view("login-view", {
-          title: "Login error"
+          title: "Login error",
           errors: [{ message: "Login failed" }]
         }).code(500);
       }
