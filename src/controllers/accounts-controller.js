@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { db } from "../models/db.js";
 import { UserSpec, UserCredentialsSpec } from "../models/joi-schemas.js";
 
@@ -26,9 +27,28 @@ export const accountsController = {
       },
     },
     handler: async function (request, h) {
-      const user = request.payload;
-      await db.userStore.addUser(user);
-      return h.redirect("/");
+      try {
+        const userData = request.payload;
+
+        const existingUser = await db.userStore.getUserByEmail(userData.email);
+        if (existingUser) {
+          return h. view("signup-view", {
+            title: "Sign up error",
+            errors: [{ message: "Email already in use"}]
+          }).code(400)
+        }
+
+        const saltRounds = 12;
+        userData.password = await bcrypt.hash(userData.password, saltRounds);
+
+        await db.userStore.addUser(userData);
+        retrun h.redirect("/");
+      } catch (error) {
+        return h.view("signup-view", {
+          title:"Sign up error",
+          errors: [{ message: "Error creating account" }]
+        }).code(500)
+      } 
     },
   },
 
@@ -49,13 +69,33 @@ export const accountsController = {
       },
     },
     handler: async function (request, h) {
-      const { email, password } = request.payload;
-      const user = await db.userStore.getUserByEmail(email);
-      if (!user || user.password !== password) {
-        return h.redirect("/");
-      }
-      request.cookieAuth.set({ id: user._id });
+      try{
+        const { email, password } = request.payload;
+
+        const user = await db.userStore.getUserByEmail(email);
+        if (!user) {
+          return h.view("login-view", {
+            title: "Login error",
+            errors: [{ message: "Invalid email or password" }]
+          }).code(401);
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+
+          return h.view("login-view", {
+            title: "Login error",
+            errors: [{ message: "Invalid email or password"}]
+          }).code(401)
+        }
+        request.cookieAuth.set({ id: user._id });
       return h.redirect("/dashboard");
+      } catch (error) {
+        return h.view("login-view", {
+          title: "Login error"
+          errors: [{ message: "Login failed" }]
+        }).code(500);
+      }
     },
   },
 

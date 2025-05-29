@@ -1,4 +1,5 @@
 import Boom from "@hapi/boom";
+import bcrypt from "bcryptjs";
 import { db } from "../models/db.js";
 import { createToken } from "./jwt-utils.js";
 import { UserCredentialsSpec, UserSpec, UserSpecPlus, IdSpec, UserArray, JwtAuth } from "../models/joi-schemas.js";
@@ -49,9 +50,21 @@ export const userApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        const user = await db.userStore.addUser(request.payload);
+        const userData = request.payload;
+
+        const existingUser = await db.userStore. getUserByEmail(userData.email);
+        if (existingUser){
+          return Boom.conflict("Email already in use");
+        }
+
+        const saltRounds = 12;
+        userData.password = await bcrypt.hash(userData.password, saltRounds);
+
+        const user = await db.userStore.addUser(userData);
         if (user) {
-          return h.response(user).code(201);
+          const userResponse = { ...user };
+          delete userResponse.password;
+          return h.response(userResponse).code(201);
         }
         return Boom.badImplementation("error creating user");
       } catch (err) {
@@ -86,15 +99,25 @@ export const userApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        const user = await db.userStore.getUserByEmail(request.payload.email);
+        const { email, password } = request.payload;
+
+        const user = await db.userStore.getUserByEmail(email);
         if (!user) {
           return Boom.unauthorized("User not found");
         }
-        if (user.password !== request.payload.password) {
-          return Boom.unauthorized("Invalid password");
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+          return Boom.unauthorized("Invalid Credentials");
         }
+
         const token = createToken(user);
-        return h.response({ success: true, token: token, name: `${user.firstName} ${user.lastName}`, _id: user._id }).code(201);
+        return h.response({
+          success: true,
+          token: token,
+          name: `${user.firstName} ${user.lastName}`,
+          _id: user._id
+        }).code(201);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
       }
